@@ -66,6 +66,7 @@ This lab is designed to help users **learn and practice Reflected XSS exploitati
 ---
 
 ## **📂 Lab Structure**
+```bash
 Ref_XSS/
 ├── easy/
 │   ├── index.html
@@ -83,7 +84,7 @@ Ref_XSS/
 │   ├── level2.html
 │   └── level3.html
 └── README.md
-
+```
 
 ---
 
