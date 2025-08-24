@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lemon Juice Recipe - Ref_XSS Easy Level 1</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #ff8c00;
+        }
+        .recipe {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .vulnerable-box {
+            background-color: #ffeb3b;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            border: 1px dashed #ff8c00;
+        }
+        .hint {
+            color: #ff5722;
+            font-style: italic;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>How to Make Lemon Juice</h1>
+
+    <div class="vulnerable-box">
+        <p id="touch-output">
+            Try touching something! Add <code>?touch=...</code> to the URL.
+        </p>
+    </div>
+
+    <div class="recipe">
+        <h2>Lemon Juice Recipe</h2>
+        <p><strong>Ingredients:</strong></p>
+        <ul>
+            <li>4-6 lemons</li>
+            <li>1 cup of water</li>
+            <li>2-3 tablespoons of sugar (adjust to taste)</li>
+            <li>Ice cubes</li>
+        </ul>
+        <p><strong>Instructions:</strong></p>
+        <ol>
+            <li>Squeeze the lemons to extract the juice.</li>
+            <li>Strain the juice to remove seeds and pulp.</li>
+            <li>Add water and sugar to the lemon juice. Stir well.</li>
+            <li>Pour over ice and enjoy!</li>
+        </ol>
+    </div>
+
+    <div class="hint">
+        <p><strong>Hint:</strong> This page is vulnerable to reflected XSS. Try injecting a script using the <code>touch</code> parameter!</p>
+        <p>Example: <code>level1.html?touch=&lt;img src=x onerror=alert('XSS')&gt;</code></p>
+    </div>
+
+    <script>
+        // Only render if there's a touch parameter in the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const touchValue = urlParams.get('touch');
+        if (touchValue) {
+            document.getElementById('touch-output').innerHTML =
+                `You touched: ${touchValue}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page - Ref_XSS Medium Level 2</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #ff8c00;
+            text-align: center;
+        }
+        #loginForm {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        #welcomeMessage {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f3fe;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+        .hint {
+            color: #ff5722;
+            font-style: italic;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login Page</h1>
+
+    <div id="loginForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div id="welcomeMessage"></div>
+
+    <div class="hint">
+        <p><strong>Hint:</strong> The welcome message is vulnerable to XSS. Try logging in with a malicious username!</p>
+        <p>Example: <code>&lt;img src=x onerror=alert('XSS')&gt;</code></p>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Simulate login (vulnerable: username is directly inserted into HTML)
+            document.getElementById('welcomeMessage').style.display = 'block';
+            document.getElementById('welcomeMessage').innerHTML =
+                `Welcome back, <strong>${username}</strong>! You are now logged in.`;
+
+            // Clear password field
+            document.getElementById('password').value = '';
+        }
+    </script>
+</body>
+</html>

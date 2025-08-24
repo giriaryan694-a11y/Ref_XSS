@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic 8-Ball - Ref_XSS Hard Level 1</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #eee;
+            font-family: 'Comic Sans MS', cursive;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #ff9900;
+        }
+        #eightBall {
+            width: 200px;
+            height: 200px;
+            background-color: #000;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 153, 0, 0.5);
+        }
+        #questionInput {
+            width: 300px;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        #answer {
+            margin-top: 20px;
+            font-size: 20px;
+            min-height: 50px;
+            color: #eee;
+        }
+        .hint {
+            color: #ff6b6b;
+            font-style: italic;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎱 Magic 8-Ball 🎱</h1>
+    <p>Ask a yes/no question and click the 8-ball!</p>
+
+    <input type="text" id="questionInput" placeholder="Type your question..." autocomplete="off">
+    <div id="eightBall" onclick="shakeBall()">8</div>
+    <div id="answer"></div>
+
+    <div class="hint">
+        <p><strong>Hint:</strong> The 8-ball's answer is vulnerable to XSS. Try asking a "question" with a script!</p>
+        <p>Example: <code>&lt;/strong&gt;&lt;img src=x onerror=alert('XSS')&gt;</code></p>
+    </div>
+
+    <script>
+        // Clear the input field on page load to prevent autofill/cached values
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('questionInput').value = '';
+        });
+
+        function shakeBall() {
+            const questionInput = document.getElementById('questionInput');
+            const question = questionInput.value.trim();
+
+            // Only proceed if there's a question
+            if (!question) {
+                alert("Please ask a question first!");
+                return;
+            }
+
+            const answers = [
+                "It is certain.",
+                "It is decidedly so.",
+                "Without a doubt.",
+                "Yes - definitely.",
+                "You may rely on it.",
+                "As I see it, yes.",
+                "Most likely.",
+                "Outlook good.",
+                "Yes.",
+                "Signs point to yes.",
+                "Reply hazy, try again.",
+                "Ask again later.",
+                "Better not tell you now.",
+                "Cannot predict now.",
+                "Concentrate and ask again.",
+                "Don't count on it.",
+                "My reply is no.",
+                "My sources say no.",
+                "Outlook not so good.",
+                "Very doubtful."
+            ];
+
+            // Vulnerable: User input is directly inserted into HTML
+            const randomAnswer = answers[Math.floor(Math.random() * answers.length)];
+            document.getElementById('answer').innerHTML =
+                `<p>You asked: <strong>${question}</strong></p>
+                 <p>Magic 8-Ball says: <strong>${randomAnswer}</strong></p>`;
+
+            // Clear the input field after submission
+            questionInput.value = '';
+        }
+    </script>
+</body>
+</html>

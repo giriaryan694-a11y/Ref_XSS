@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silly News - Ref_XSS Easy Level 3</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #ff6b6b;
+            text-align: center;
+        }
+        .news-list {
+            list-style: none;
+            padding: 0;
+        }
+        .news-list li {
+            background-color: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        .news-list li:hover {
+            background-color: #f0f0f0;
+        }
+        .news-content {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            min-height: 100px;
+        }
+        .hint {
+            color: #ff5722;
+            font-style: italic;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>📰 Silly News Daily</h1>
+
+    <ul class="news-list">
+        <li onclick="location.hash='#cat-vs-mice-gang'">🐱 Cat vs. Mice Gang: Who Will Win?</li>
+        <li onclick="location.hash='#pizza-delivered-by-drones'">🍕 Pizza Now Delivered by Drones (Sometimes to the Wrong House)</li>
+        <li onclick="location.hash='#dog-becomes-mayor'">🐶 Local Dog Elected Mayor After Promising More Parks</li>
+        <li onclick="location.hash='#alien-sightings-increase'">👽 Alien Sightings Increase After New Taco Shop Opens</li>
+    </ul>
+
+    <div class="news-content" id="newsContent">
+        <p>Click on a news headline to read more!</p>
+    </div>
+
+    <div class="hint">
+        <p><strong>Hint:</strong> The news hash (#) is vulnerable to XSS. Try injecting a script into the hash!</p>
+        <p>Example: <code>#&lt;img src=x onerror=alert('XSS')&gt;</code></p>
+    </div>
+
+    <script>
+        function renderHashContent() {
+            const hash = decodeURIComponent(location.hash.substring(1));
+            const newsContent = document.getElementById('newsContent');
+
+            // Vulnerable: Directly inserting hash content into HTML
+            if (hash) {
+                newsContent.innerHTML = `<h2>News: ${hash}</h2><p>This is a silly news article about ${hash}.</p>`;
+            }
+        }
+
+        window.addEventListener('hashchange', renderHashContent);
+        window.addEventListener('load', renderHashContent);
+    </script>
+</body>
+</html>

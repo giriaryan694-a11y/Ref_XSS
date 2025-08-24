@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Engine - Ref_XSS Easy Level 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 100px;
+        }
+        .search-box {
+            width: 500px;
+            margin: 0 auto;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 20px;
+            font-size: 16px;
+            outline: none;
+        }
+        button {
+            background-color: #4285f4;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+        .results {
+            margin-top: 20px;
+            text-align: left;
+            border: 1px solid #ddd;
+            padding: 20px;
+            min-height: 50px;
+            border-radius: 5px;
+        }
+        .hint {
+            color: #ff5722;
+            font-style: italic;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Engine</h1>
+
+    <div class="search-box">
+        <form id="searchForm">
+            <input type="text" id="searchInput" placeholder="Search the web...">
+            <button type="submit">Search</button>
+        </form>
+        <div class="results" id="searchResults"></div>
+    </div>
+
+    <div class="hint">
+        <p><strong>Hint:</strong> This search box is vulnerable to XSS. Try entering a script tag!</p>
+        <p>Example: <code>&lt;script&gt;alert(1)&lt;/script&gt;</code></p>
+    </div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = document.getElementById('searchInput').value;
+            // Vulnerable: Using document.write to render user input
+            document.getElementById('searchResults').innerHTML =
+                `<p>You searched for: </p><div>${query}</div>`;
+            // This will execute scripts in some contexts
+            document.write(`<p>You searched for: ${query}</p>`);
+        });
+    </script>
+</body>
+</html>

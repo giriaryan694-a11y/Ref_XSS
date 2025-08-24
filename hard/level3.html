@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Travel Log - Ref_XSS Hard Level 3</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #ffd700;
+        }
+        #logContainer {
+            width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+        #logInput {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ffd700;
+            background-color: #333;
+            color: #fff;
+        }
+        button {
+            background-color: #ffd700;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #logDisplay {
+            margin-top: 20px;
+            text-align: left;
+            padding: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            min-height: 100px;
+            border: 1px solid #ffd700;
+        }
+        .logEntry {
+            padding: 5px;
+            border-bottom: 1px solid #ffd700;
+        }
+        .hint {
+            color: #ff6b6b;
+            font-style: italic;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>⏳ Time Travel Log ⏳</h1>
+    <p>Enter your time travel adventure log:</p>
+
+    <div id="logContainer">
+        <input type="text" id="logInput" placeholder="Enter your log entry..." autocomplete="off">
+        <button onclick="addLogEntry()">Add Entry</button>
+        <div id="logDisplay"></div>
+    </div>
+
+    <div class="hint">
+        <p><strong>Hint:</strong> The time travel log is vulnerable to XSS. Try entering a malicious log!</p>
+        <p>Example: <code>&lt;/div&gt;&lt;img src=x onerror=alert('XSS')&gt;</code></p>
+    </div>
+
+    <script>
+        // Clear the input field on page load to prevent autofill/cached values
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('logInput').value = '';
+        });
+
+        function addLogEntry() {
+            const logInput = document.getElementById('logInput');
+            const logEntry = logInput.value.trim();
+
+            // Only proceed if there's a log entry
+            if (!logEntry) {
+                alert("Please enter a log entry first!");
+                return;
+            }
+
+            // Vulnerable: User input is directly inserted into HTML
+            const logDisplay = document.getElementById('logDisplay');
+            logDisplay.innerHTML += `<div class="logEntry">${logEntry}</div>`;
+
+            // Clear the input field after submission
+            logInput.value = '';
+        }
+    </script>
+</body>
+</html>

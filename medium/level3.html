@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Chat Preview - Ref_XSS Medium Level 3</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #ff8c00;
+            text-align: center;
+        }
+        #chatBox {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            height: 300px;
+            overflow-y: scroll;
+        }
+        #messageInput {
+            width: calc(100% - 90px);
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .message {
+            background-color: #e3f2fd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .hint {
+            color: #ff5722;
+            font-style: italic;
+            margin-top: 20px;
+            text-align: center;
+        }
+        #inputContainer {
+            display: flex;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Live Chat Preview</h1>
+
+    <div id="chatBox">
+        <p style="text-align: center; color: #999;">Messages will appear here in real-time.</p>
+    </div>
+
+    <div id="inputContainer">
+        <input type="text" id="messageInput" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div class="hint">
+        <p><strong>Hint:</strong> Messages are vulnerable to XSS. Try sending a malicious message!</p>
+        <p>Example: <code>&lt;img src=x onerror=alert('XSS')&gt;</code></p>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value;
+            const chatBox = document.getElementById('chatBox');
+
+            if (message.trim() !== '') {
+                // Vulnerable: User input is directly inserted into HTML
+                chatBox.innerHTML += `<div class="message">${message}</div>`;
+                messageInput.value = '';
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
+
+        // Allow sending messages with the Enter key
+        document.getElementById('messageInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
