@@ -27,7 +27,7 @@ This lab **primarily focuses on Reflected XSS**, where malicious scripts are inc
 ---
 
 ## **🎯 About This Lab**
-This lab is designed to help users **learn and practice Reflected XSS exploitation and prevention** through interactive challenges. It includes **three difficulty levels (Easy, Medium, Hard)** with fun, silly scenarios to keep learning engaging.
+This lab is designed to help users **learn and practice DOM XSS exploitation and prevention** through interactive challenges. It includes **three difficulty levels (Easy, Medium, Hard)** with fun, silly scenarios to keep learning engaging.
 
 ---
 
@@ -35,7 +35,7 @@ This lab is designed to help users **learn and practice Reflected XSS exploitati
 Here’s the updated README.md with your requested additions, including a focus on Reflected XSS, cheat sheets, and learning resources:
 
  Copy# **Ref_XSS Lab**
-**A Hands-On Reflected Cross-Site Scripting (XSS) Learning Lab**
+**A Hands-On DOM Cross-Site Scripting (XSS) Learning Lab**
 
 ---
 
@@ -62,7 +62,7 @@ This lab **primarily focuses on Reflected XSS**, where malicious scripts are inc
 ---
 
 ## **🎯 About This Lab**
-This lab is designed to help users **learn and practice Reflected XSS exploitation and prevention** through interactive challenges. It includes **three difficulty levels (Easy, Medium, Hard)** with fun, silly scenarios to keep learning engaging.
+This lab is designed to help users **learn and practice DOM XSS exploitation and prevention** through interactive challenges. It includes **three difficulty levels (Easy, Medium, Hard)** with fun, silly scenarios to keep learning engaging.
 
 ---
 
