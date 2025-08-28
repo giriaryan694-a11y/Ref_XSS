@@ -45,7 +45,7 @@ Here’s the updated README.md with your requested additions, including a focus 
 ---
 
 ## **🔍 Types of XSS**
-This lab **primarily focuses on Reflected XSS**, where malicious scripts are included in a URL and reflected back to the user. However, it also touches on other types:
+This lab **primarily focuses on DOM XSS**, where malicious scripts are included in a URL and reflected back to the user. However, it also touches on other types:
 
 1. **Stored XSS**
    - Malicious scripts are permanently stored on a server (e.g., in a database).
